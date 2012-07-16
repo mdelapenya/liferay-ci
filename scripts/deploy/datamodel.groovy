@@ -1,3 +1,5 @@
+#!/usr/bin/env groovy
+
 /**
 * This scripts checks if the upgrade*.sql file or the UpgradeProcess*.java
 * differs from the current ones deployed.
@@ -5,8 +7,6 @@
 * If some change is found, the script will fail. The changes should be applied
 * manually
 */
-
-#!/usr/bin/env groovy
 
 import java.security.MessageDigest
 
