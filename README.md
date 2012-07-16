@@ -1,0 +1,1 @@
+This repo contains some scripts and utilities used in the continuous integration process started in Liferay.
