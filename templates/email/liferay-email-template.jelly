@@ -58,47 +58,50 @@
 
       <h2>Changes</h2>
 
-      <table style="width:100%">
+      <div id="changes">
 
-        <j:forEach var="cs" items="${changeSet}" varStatus="loop">
+        <j:if test="${hadChanges}">
 
-          <j:set var="hadChanges" value="true" />
+          <ul>
 
-          <j:set var="aUser" value="${cs.author.displayName}"/>
+            <j:forEach var="cs" items="${changeSet}" varStatus="loop">
 
-          <tr>
-            <td colspan="2" style="${td_bg2}">
-              ${spc}Revision <strong>${cs.commitId?:cs.revision?:cs.changeNumber}</strong> by
-              <strong>${aUser!=null?aUser.displayName:cs.author.displayName}: </strong>
-              <strong>(${cs.msgAnnotated})</strong>
-             </td>
-          </tr>
+              <j:set var="hadChanges" value="true" />
 
-          <j:forEach var="p" items="${cs.affectedFiles}">
+              <j:set var="aUser" value="${cs.author.displayName}"/>
 
-            <tr>
-              <td style="width:10%">
-                ${spc}${p.editType.name}
-              </td>
-              <td>
-                ${p.path}
-              </td>
-            </tr>
+              <li>
+                <h3>
+                  ${spc}Revision <strong>${cs.commitId?:cs.revision?:cs.changeNumber}</strong> by <strong>${aUser!=null?aUser.displayName:cs.author.displayName}: </strong><strong>(${cs.msgAnnotated})</strong>
+                </h3>
 
-          </j:forEach>
+                <ul>
 
-        </j:forEach>
+                  <j:forEach var="p" items="${cs.affectedFiles}">
+
+                    <li>
+                      <span>${spc}${p.editType.name}</span> - ${p.path}
+                    </li>
+
+                  </j:forEach>
+
+                </ul>
+              </li>
+
+            </j:forEach>
+
+          </ul>
+        </j:if>
 
         <j:if test="${!hadChanges}">
 
-          <tr>
-            <td colspan="2">No Changes</td>
-          </tr>
+           <p>
+            No Changes
+          </p>
 
         </j:if>
 
-      </table>
-      <br/>
+      </div>
 
     </j:if>
 
