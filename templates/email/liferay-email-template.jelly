@@ -1,154 +1,188 @@
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define">
 
-<body>
-  <j:set var="spc" value="&amp;nbsp;&amp;nbsp;" />
+  <body>
 
-  <j:set var="td_bg1" value="color:white; background-color:#0000C0; font-size:120%" />
-  <j:set var="td_bg2" value="color:white; background-color:#4040FF; font-size:110%" />
-  <j:set var="td_bg3" value="color:#EEE; background-color:#4040FF; font-size:90%"  />
+    <j:set var="spc" value="&amp;nbsp;&amp;nbsp;" />
+    <j:set var="table_errors" value="width:100%;"/>
+    <j:set var="td_style" value="background-color: #d4d4d4;color: #000000;padding: 2px;border: 0.1em solid black;"/>
+    <j:set var="div_package" value="width: 100%; padding: 5px"/>
 
-  <!-- GENERAL INFO -->
+    <!-- GENERAL INFO -->
 
-  <table>
-    <tr>
-      <td style="text-align:right">
-
-        <j:choose>
-
-          <j:when test="${build.result=='SUCCESS'}">
-            <IMG SRC="${rooturl}static/4860a290/images/32x32/blue.gif" />
-          </j:when>
-          <j:when test="${build.result=='FAILURE'}">
-            <IMG SRC="${rooturl}static/4860a290/images/32x32/red.gif" />
-          </j:when>
-          <j:otherwise>
-            <IMG SRC="${rooturl}static/4860a290/images/32x32/yellow.gif" />
-          </j:otherwise>
-
-        </j:choose>
-
-      </td>
-      <td style="vertical-align:middle">
-        <strong style="font-size: 200%;">BUILD ${build.result}</strong>
-      </td>
-    </tr>
-    <tr>
-      <td>Build URL</td>
-      <td><A href="${rooturl}${build.url}">${rooturl}${build.url}</A></td>
-    </tr>
-    <tr>
-      <td>Project:</td><td>${project.name}</td>
-    </tr>
-    <tr>
-      <td>Date of build:</td><td>${it.timestampString}</td>
-    </tr>
-    <tr>
-      <td>Build duration:</td><td>${build.durationString}</td>
-    </tr>
-  </table>
-  <br/>
-
-  <!-- CHANGE SET -->
-
-  <j:set var="changeSet" value="${build.changeSet}" />
-
-  <j:if test="${changeSet!=null}">
-
-    <j:set var="hadChanges" value="false" />
-
-    <table style="width:100%">
+    <table>
       <tr>
-        <td style="${td_bg1}" colspan="2"><strong>CHANGES</strong></td>
-      </tr>
+        <td style="text-align:right">
 
-      <j:forEach var="cs" items="${changeSet}" varStatus="loop">
+          <j:choose>
 
-        <j:set var="hadChanges" value="true" />
-        <j:set var="aUser" value="${cs.author.displayName}"/>
+            <j:when test="${build.result=='SUCCESS'}">
+              <IMG SRC="${rooturl}static/4860a290/images/32x32/blue.gif" />
+            </j:when>
+            <j:when test="${build.result=='FAILURE'}">
+              <IMG SRC="${rooturl}static/4860a290/images/32x32/red.gif" />
+            </j:when>
+            <j:otherwise>
+              <IMG SRC="${rooturl}static/4860a290/images/32x32/yellow.gif" />
+            </j:otherwise>
 
-        <tr>
-          <td colspan="2" style="${td_bg2}">
-            ${spc}Revision <strong>${cs.commitId?:cs.revision?:cs.changeNumber}</strong> by
-            <strong>${aUser!=null?aUser.displayName:cs.author.displayName}: </strong>
-            <strong>(${cs.msgAnnotated})</strong>
-           </td>
-        </tr>
-        <j:forEach var="p" items="${cs.affectedFiles}">
-          <tr>
-            <td style="width:10%">
-              ${spc}${p.editType.name}
-            </td>
-            <td>
-              ${p.path}
-            </td>
-          </tr>
-        </j:forEach>
-      </j:forEach>
-      <j:if test="${!hadChanges}">
-        <tr>
-          <td colspan="2">No Changes</td>
-        </tr>
-      </j:if>
-    </table>
-  <br/>
-  </j:if>
+          </j:choose>
 
-  <!-- JUnit TEMPLATE -->
-
-  <j:set var="junitResultList" value="${it.JUnitTestResult}" />
-
-  <j:if test="${junitResultList.isEmpty()!=true}">
-    <table stryle="width:100%">
-      <thead>
-        <tr>
-          <th style="${td_bg1}">
-            <strong>Failing tests</strong>
-          </Th>
-          <th style="${td_bg1}">
-            <strong>Failing since</strong>
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <j:forEach var="junitResult" items="${it.JUnitTestResult}">
-          <j:forEach var="packageResult" items="${junitResult.getChildren()}">
-            <j:forEach var="failed_test" items="${packageResult.getFailedTests()}">
-              <tr bgcolor="white">
-                <td style="${td_bg2}">
-                  ${failed_test.getPackageName()}.<strong>${failed_test.getName()}</strong>
-                </td>
-                <td style="${td_bg3}">
-                  <a style="${td_bg3}" href="${rooturl}${failed_test.getFailedSinceRun().getUrl()}">${failed_test.getFailedSinceRun().getDisplayName()}</a>
-                </td>
-              </tr>
-            </j:forEach>
-          </j:forEach>
-        </j:forEach>
-    </table>
-    <br/>
-  </j:if>
-
-  <!-- CONSOLE OUTPUT -->
-
-  <j:getStatic var="resultFailure" field="FAILURE" className="hudson.model.Result"/>
-
-  <j:if test="${build.result==resultFailure}">
-    <table style="width:100%" cellpadding="0" cellspacing="0">
-      <tr>
-        <td style="${td_bg1}">
-          <strong>CONSOLE OUTPUT</strong>
+        </td>
+        <td style="vertical-align:middle">
+          <strong style="font-size: 200%;">BUILD ${build.result}</strong>
         </td>
       </tr>
-        <j:forEach var="line" items="${build.getLog(100)}">
-          <tr>
-            <td style="font-family:Courier New;">
-              ${line}
-            </td>
-          </tr>
-        </j:forEach>
+      <tr>
+        <td>Build URL</td>
+        <td><A href="${rooturl}${build.url}">${rooturl}${build.url}</A></td>
+      </tr>
+      <tr>
+        <td>Project:</td><td>${project.name}</td>
+      </tr>
+      <tr>
+        <td>Date of build:</td><td>${it.timestampString}</td>
+      </tr>
+      <tr>
+        <td>Build duration:</td><td>${build.durationString}</td>
+      </tr>
     </table>
     <br/>
-  </j:if>
 
-</body>
+    <!-- CHANGE SET -->
+
+    <j:set var="changeSet" value="${build.changeSet}" />
+
+    <j:if test="${changeSet!=null}">
+
+      <j:set var="hadChanges" value="false" />
+
+      <h2>Changes</h2>
+
+      <div id="changes">
+
+        <j:if test="${hadChanges}">
+
+          <ul>
+
+            <j:forEach var="cs" items="${changeSet}" varStatus="loop">
+
+              <j:set var="hadChanges" value="true" />
+
+              <j:set var="aUser" value="${cs.author.displayName}"/>
+
+              <li>
+                <h3>
+                  ${spc}Revision <strong>${cs.commitId?:cs.revision?:cs.changeNumber}</strong> by <strong>${aUser!=null?aUser.displayName:cs.author.displayName}: </strong><strong>(${cs.msgAnnotated})</strong>
+                </h3>
+
+                <ul>
+
+                  <j:forEach var="p" items="${cs.affectedFiles}">
+
+                    <li>
+                      <span>${spc}${p.editType.name}</span> - ${p.path}
+                    </li>
+
+                  </j:forEach>
+
+                </ul>
+              </li>
+
+            </j:forEach>
+
+          </ul>
+        </j:if>
+
+        <j:if test="${!hadChanges}">
+
+           <p>
+            No Changes
+          </p>
+
+        </j:if>
+
+      </div>
+
+    </j:if>
+
+    <!-- JUnit TEMPLATE -->
+
+    <j:set var="junitResultList" value="${it.JUnitTestResult}" />
+
+    <j:if test="${junitResultList.isEmpty()!=true}">
+
+      <h2>Failing Tests</h2>
+
+      <div id="junit-result-list">
+
+          <j:forEach var="junitResult" items="${it.JUnitTestResult}">
+
+            <j:forEach var="packageResult" items="${junitResult.getChildren()}">
+
+              <j:set var="packageFailedTestList" value="${packageResult.getFailedTests()}" />
+
+              <j:if test="${packageFailedTestList.isEmpty() != true}">
+
+                <h3>${packageResult.getName()}</h3>
+
+                <div style="${div_package}">
+                  <table style="${table_errors}">
+                    <thead>
+                      <th style="text-align:left">Package.<strong>method</strong></th>
+                      <th>Failing since</th>
+                    </thead>
+                    <tbody>
+
+                      <j:forEach var="failed_test" items="${packageFailedTestList}">
+
+                        <tr>
+                          <td style="${td_style}">
+                            ${failed_test.getPackageName()}.<strong>${failed_test.getName()}</strong>
+                          </td>
+                          <td style="${td_style}">
+                            <a href="${rooturl}${failed_test.getFailedSinceRun().getUrl()}">${failed_test.getFailedSinceRun().getDisplayName()}</a>
+                          </td>
+                        </tr>
+
+                      </j:forEach>
+
+                    </tbody>                      
+                  </table>
+                </div>
+
+              </j:if>
+
+            </j:forEach>
+
+          </j:forEach>
+
+      </div>
+
+    </j:if>
+
+    <!-- CONSOLE OUTPUT -->
+
+    <j:getStatic var="resultFailure" field="FAILURE" className="hudson.model.Result"/>
+
+    <j:if test="${build.result==resultFailure}">
+
+      <h2>CONSOLE OUTPUT</h2>
+
+      <table style="width:100%" cellpadding="0" cellspacing="0">
+
+          <j:forEach var="line" items="${build.getLog(100)}">
+            <tr>
+              <td style="font-family:Courier New;">
+                ${line}
+              </td>
+            </tr>
+          </j:forEach>
+
+      </table>
+      <br/>
+
+    </j:if>
+
+  </body>
+
 </j:jelly>
