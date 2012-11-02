@@ -3,9 +3,9 @@
   <body>
 
     <j:set var="spc" value="&amp;nbsp;&amp;nbsp;" />
-    <j:set var="td_bg1" value="color:white; background-color:#0000C0; font-size:120%" />
-    <j:set var="td_bg2" value="color:white; background-color:#4040FF; font-size:110%" />
-    <j:set var="td_bg3" value="color:#EEE; background-color:#4040FF; font-size:90%"  />
+    <j:set var="table_errors" value="width:100%;"/>
+    <j:set var="td_style" value="background-color: #d4d4d4;color: #000000;padding: 2px;border: 0.1em solid black;"/>
+    <j:set var="div_package" value="width: 100%; padding: 5px"/>
 
     <!-- GENERAL INFO -->
 
@@ -114,38 +114,48 @@
       <h2>Failing Tests</h2>
 
       <div id="junit-result-list">
-        <ul>
 
           <j:forEach var="junitResult" items="${it.JUnitTestResult}">
 
             <j:forEach var="packageResult" items="${junitResult.getChildren()}">
 
-              <h3>${packageResult.getName()}</h3>
+              <j:set var="packageFailedTestList" value="${packageResult.getFailedTests()}" />
 
-              <div class="package-wrapper">
-                <table>
+              <j:if test="${packageFailedTestList.isEmpty() != true}">
 
-                  <j:forEach var="failed_test" items="${packageResult.getFailedTests()}">
+                <h3>${packageResult.getName()}</h3>
 
-                    <tr bgcolor="white">
-                      <td style="${td_bg2}">
-                        ${failed_test.getPackageName()}.<strong>${failed_test.getName()}</strong>
-                      </td>
-                      <td style="${td_bg3}">
-                        <a style="${td_bg3}" href="${rooturl}${failed_test.getFailedSinceRun().getUrl()}">${failed_test.getFailedSinceRun().getDisplayName()}</a>
-                      </td>
-                    </tr>
+                <div style="${div_package}">
+                  <table style="${table_errors}">
+                    <thead>
+                      <th style="text-align:left">Package.<strong>method</strong></th>
+                      <th>Failing since</th>
+                    </thead>
+                    <tbody>
 
-                  </j:forEach>
+                      <j:forEach var="failed_test" items="${packageFailedTestList}">
 
-                </table>
-              </div>
+                        <tr>
+                          <td style="${td_style}">
+                            ${failed_test.getPackageName()}.<strong>${failed_test.getName()}</strong>
+                          </td>
+                          <td style="${td_style}">
+                            <a href="${rooturl}${failed_test.getFailedSinceRun().getUrl()}">${failed_test.getFailedSinceRun().getDisplayName()}</a>
+                          </td>
+                        </tr>
+
+                      </j:forEach>
+
+                    </tbody>                      
+                  </table>
+                </div>
+
+              </j:if>
 
             </j:forEach>
 
           </j:forEach>
 
-        </ul>
       </div>
 
     </j:if>
