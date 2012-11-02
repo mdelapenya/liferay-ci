@@ -110,42 +110,43 @@
     <j:set var="junitResultList" value="${it.JUnitTestResult}" />
 
     <j:if test="${junitResultList.isEmpty()!=true}">
- 
-      <table stryle="width:100%">
-        <thead>
-          <tr>
-            <th style="${td_bg1}">
-              <strong>Failing tests</strong>
-            </th>
-            <th style="${td_bg1}">
-              <strong>Failing since</strong>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
+
+      <h2>Failing Tests</h2>
+
+      <div id="junit-result-list">
+        <ul>
 
           <j:forEach var="junitResult" items="${it.JUnitTestResult}">
 
             <j:forEach var="packageResult" items="${junitResult.getChildren()}">
 
-              <j:forEach var="failed_test" items="${packageResult.getFailedTests()}">
+              <h3>${packageResult.getName()}</h3>
 
-                <tr bgcolor="white">
-                  <td style="${td_bg2}">
-                    ${failed_test.getPackageName()}.<strong>${failed_test.getName()}</strong>
-                  </td>
-                  <td style="${td_bg3}">
-                    <a style="${td_bg3}" href="${rooturl}${failed_test.getFailedSinceRun().getUrl()}">${failed_test.getFailedSinceRun().getDisplayName()}</a>
-                  </td>
-                </tr>
-              </j:forEach>
+              <div class="package-wrapper">
+                <table>
+
+                  <j:forEach var="failed_test" items="${packageResult.getFailedTests()}">
+
+                    <tr bgcolor="white">
+                      <td style="${td_bg2}">
+                        ${failed_test.getPackageName()}.<strong>${failed_test.getName()}</strong>
+                      </td>
+                      <td style="${td_bg3}">
+                        <a style="${td_bg3}" href="${rooturl}${failed_test.getFailedSinceRun().getUrl()}">${failed_test.getFailedSinceRun().getDisplayName()}</a>
+                      </td>
+                    </tr>
+
+                  </j:forEach>
+
+                </table>
+              </div>
 
             </j:forEach>
 
           </j:forEach>
 
-      </table>
-      <br/>
+        </ul>
+      </div>
 
     </j:if>
 
