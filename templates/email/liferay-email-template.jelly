@@ -128,8 +128,8 @@
                 <div style="${div_package}">
                   <table style="${table_errors}">
                     <thead>
-                      <th style="text-align:left">Package.<strong>method</strong></th>
-                      <th>Failing since</th>
+                      <th style="text-align:left; width: 75%">Package.<strong>method</strong></th>
+                      <th style="width: 25%">Failing since</th>
                     </thead>
                     <tbody>
 
