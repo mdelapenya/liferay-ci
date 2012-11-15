@@ -123,7 +123,7 @@
 
               <j:if test="${packageFailedTestList.isEmpty() != true}">
 
-                <h3>${packageResult.getName()}</h3>
+                <h3>${packageResult.getName()}.${failed_test.getName()}</h3>
 
                 <div style="${div_package}">
                   <table style="${table_errors}">
