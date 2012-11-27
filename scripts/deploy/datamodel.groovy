@@ -63,39 +63,6 @@ def extractTextFromZipFile = { zipFilePath, pattern , conversion ->
 	md5sum
 }
 
-/*
-class CompareFiles {
-	String checkSumToCompare
-	def conversion
-
-	def checkForChanges = { file ->
-		def md5sum = conversion(file.newInputStream())	
-
-		if(checkSumToCompare != md5sum) {
-			println "[FAILURE]: The file ${file} has changed."			
-		}
-	}
-}
-
-def searchForChanges = { rootFolder, textToCompare, filter, conversion ->
-	rootFolder.traverse type: FILES, visit: new CompareFiles(checkSumToCompare:textToCompare, conversion: conversion).checkForChanges, nameFilter: filter	
-}
-
-def rootFolder = new File(this.args[0])
-
-// check for changes in the update sql file
-
-def updateSQLPattern = ~/.*${currentVersion}\.sql/
-def textUpdateSQL = extractTextFromZipFile(args[1], updateSQLPattern, generateMD5)
-searchForChanges(rootFolder, textUpdateSQL, updateSQLPattern, generateMD5)
-
-// check for changes in the upgrade sql file
-
-def upgradeSQLPattern = ~/.*${currentVersion}\.class/
-def upgradeSQLMD5 = extractTextFromZipFile(args[1], upgradeSQLPattern, generateMD5)
-searchForChanges(rootFolder, upgradeSQLMD5, upgradeSQLPattern, generateMD5)
-*/
-
 def currentVersion = determineCurrentVersion(args[0])
 
 def portalImplStaging = new File(args[1])
