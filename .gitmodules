@@ -1,0 +1,3 @@
+[submodule "liferay-ci-connector"]
+	path = liferay-ci-connector
+	url = git@heroku.com:liferay-ci-connector.git
