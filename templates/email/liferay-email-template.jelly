@@ -133,7 +133,7 @@
                       <j:forEach var="failed_test" items="${packageFailedTestList}">
 
                         <tr>
-                          <td style="${td_style}">
+                          <td style="${td_style}" title="${failed_test.getFullName()}">
                             ${failed_test.getPackageName()}.<strong>${failed_test.getName()}</strong>
                           </td>
                           <td style="${td_style}">
