@@ -60,35 +60,35 @@
 
       <div id="changes">
 
-          <ul>
+        <ul>
 
-            <j:forEach var="cs" items="${changeSet}" varStatus="loop">
+          <j:forEach var="cs" items="${changeSet}" varStatus="loop">
 
-              <j:set var="hadChanges" value="true" />
+            <j:set var="hadChanges" value="true" />
 
-              <j:set var="aUser" value="${cs.author.displayName}"/>
+            <j:set var="aUser" value="${cs.author.displayName}"/>
 
-              <li>
-                <h3>
-                  ${spc}Revision <strong>${cs.commitId?:cs.revision?:cs.changeNumber}</strong> by <strong>${aUser!=null?aUser.displayName:cs.author.displayName}: </strong><strong>(${cs.msgAnnotated})</strong>
-                </h3>
+            <li>
+              <h3>
+                ${spc}Revision <strong>${cs.commitId?:cs.revision?:cs.changeNumber}</strong> by <strong>${aUser!=null?aUser.displayName:cs.author.displayName}: </strong><strong>(${cs.msgAnnotated})</strong>
+              </h3>
 
-                <ul>
+              <ul>
 
-                  <j:forEach var="p" items="${cs.affectedFiles}">
+                <j:forEach var="p" items="${cs.affectedFiles}">
 
-                    <li>
-                      <span>${spc}${p.editType.name}</span> - ${p.path}
-                    </li>
+                  <li>
+                    <span>${spc}${p.editType.name}</span> - ${p.path}
+                  </li>
 
-                  </j:forEach>
+                </j:forEach>
 
-                </ul>
-              </li>
+              </ul>
+            </li>
 
-            </j:forEach>
+          </j:forEach>
 
-          </ul>
+        </ul>
 
         <j:if test="${!hadChanges}">
 
