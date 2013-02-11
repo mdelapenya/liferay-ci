@@ -60,8 +60,6 @@
 
       <div id="changes">
 
-        <j:if test="${hadChanges}">
-
           <ul>
 
             <j:forEach var="cs" items="${changeSet}" varStatus="loop">
@@ -91,7 +89,6 @@
             </j:forEach>
 
           </ul>
-        </j:if>
 
         <j:if test="${!hadChanges}">
 
