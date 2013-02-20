@@ -1,0 +1,19 @@
+#!/bin/bash
+
+###
+# Copy staged  plugins to the specific Server Deployment
+###
+
+OLD_IFS=${IFS}
+
+IFS=','
+
+LIFERAY_PLUGINS_REPOSITORY=/opt/tomcat/liferay-plugins-staging/
+
+for plugin in $plugins
+do 
+  echo Deploying the $plugin plugin
+  find ${LIFERAY_PLUGINS_REPOSITORY} -name $plugin*.war -exec scp {} ${server}:/home/liferay/${environment}/deploy \;
+done
+
+echo The plugins "$plugins" has been copied to the autodeploy folder present at /home/liferay/${environment}/deploy. The autodeploy process will start in a few seconds

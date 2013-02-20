@@ -1,57 +1,24 @@
 #!/bin/bash
 
-##
-## Env variables
-## 
-
-export JAVA_HOME=/opt/java/jdk1.6.0_31
 export PATH=${PATH}:/opt/ant/apache-ant-1.8.3/bin
 
 echo "Deploying the succesful build to the staging environment"
 
-STAGING_APP_SERVER_PARENT_FOLDER=/opt/tomcat/liferay-master-staging
+#  Copy all the relevant files to the staged folder
 
-APP_SERVER_PARENT_FOLDER=/opt/tomcat/liferay-master
-APP_SERVER_RUNNING_PID=${APP_SERVER_PARENT_FOLDER}/liferay.pid
+rm -fr ${stagedFolder}/webapps/ROOT
+cp -R ${WORKSPACE}/../bundles/tomcat-7.0.34/webapps/ROOT ${stagedFolder}/webapps
 
-APP_SERVER_PROPERTIES="app.server.${USER}.properties"
+cp ${WORKSPACE}/../bundles/tomcat-7.0.34/lib/ext/{support-tomcat,portal-service}.jar ${stagedFolder}/lib/ext
 
-#  Create the file
-touch ${APP_SERVER_PROPERTIES}
-
-#  Write the configuration
-echo "app.server.tomcat.dir=${STAGING_APP_SERVER_PARENT_FOLDER}" > ${APP_SERVER_PROPERTIES}
-
-#  Configure the database
-PORTAL_EXT_PROPERTIES_FILE=./portal-impl/src/portal-ext.properties
-
-mv ${PORTAL_EXT_PROPERTIES_FILE} ${PORTAL_EXT_PROPERTIES_FILE}.bak
-
-# Configure the database
-
-echo "jdbc.default.driverClassName=com.mysql.jdbc.Driver" > ${PORTAL_EXT_PROPERTIES_FILE}
-echo "jdbc.default.url=jdbc:mysql://localhost/liferay?useUnicode=true&characterEncoding=UTF-8&useFastDateParsing=false" >> ${PORTAL_EXT_PROPERTIES_FILE}
-echo "jdbc.default.username=liferay" >> ${PORTAL_EXT_PROPERTIES_FILE}
-echo "jdbc.default.password=liferay" >> ${PORTAL_EXT_PROPERTIES_FILE}
-echo "web.server.host=master.liferay.org.es" >> ${PORTAL_EXT_PROPERTIES_FILE}
-echo "web.server.http.port=80" >> ${PORTAL_EXT_PROPERTIES_FILE}
-echo "redirect.url.security.mode=domain" >> ${PORTAL_EXT_PROPERTIES_FILE}
-echo "redirect.url.domains.allowed=master.liferay.org.es" >> ${PORTAL_EXT_PROPERTIES_FILE}
-echo "index.on.startup=true" >> ${PORTAL_EXT_PROPERTIES_FILE}
-echo "session.store.password=true" >> ${PORTAL_EXT_PROPERTIES_FILE}
-
-#  Make the deploy
-ant deploy
-
-#  Revert the configuration
-rm -f ${APP_SERVER_PROPERTIES} 
-mv ${PORTAL_EXT_PROPERTIES_FILE}.bak ${PORTAL_EXT_PROPERTIES_FILE}
 
 # Include the current revision in the theme
 
+echo "Generating current revision in the default theme . . ."
+
 LIFERAY_GITHUB_REPO=https://github.com/liferay/liferay-portal/commit
 
-FILE=$(find ${STAGING_APP_SERVER_PARENT_FOLDER} -name bottom-ext.jsp)
+FILE=$(find ${stagedFolder} -name bottom-ext.jsp)
 
 CURRENT_HEAD=$(git rev-parse HEAD)
 
