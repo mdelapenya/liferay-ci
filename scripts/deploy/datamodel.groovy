@@ -13,13 +13,27 @@ import java.security.MessageDigest
 import static groovy.io.FileType.*
 import static groovy.io.FileVisitResult.*
 
-if (this.args.length != 3) {
-	println "Usage: datamodel.groovy <Path to release.properties file><Path to staging portal-impl.jar><Path to the current deployed portal-impl.jar>"
+if (this.args.length != 4) {
+	println "Usage: datamodel.groovy <Server><Environment><release.properties file><Enabled/Disable search datamodel changes>"
 
 	return
 }
 
-// release properties
+def checkDatamodel = new Boolean(this.args[3])
+
+if (!checkDatamodel) {
+	println("Searching for changes in the datamodel has been disabled")
+	println("No datamodel changes have been found")
+	return
+}
+
+def copyFromDeployedFolder = { server, environment, remoteFile ->
+	def copiedFile = "/tmp/portal-impl-$environment.jar"
+
+	"scp liferay@$server:$remoteFile $copiedFile"
+
+	copiedFile
+}
 
 determineCurrentVersion = { releaseFile ->
 	def releaseProperties = new Properties()
@@ -63,10 +77,14 @@ def extractTextFromZipFile = { zipFilePath, pattern , conversion ->
 	md5sum
 }
 
-def currentVersion = determineCurrentVersion(args[0])
+def currentVersion = determineCurrentVersion(args[2])
 
-def portalImplStaging = new File(args[1])
-def portalImplDeployed = new File(args[2])
+def stagingFolder = "/opt/tomcat/liferay-master-staging"
+def portalImplRelativePath="webapps/ROOT/WEB-INF/lib/portal-impl.jar"
+
+def portalImplStaged = "${stagingFolder}/${portalImplRelativePath}"
+
+def portalImplDeployed = new File( copyFromDeployedFolder(args[0], args[1], "/deploy/${arg[1]}/${portalImplRelativePath}") )
 
 new File("attachments").eachFile() { file ->
 	file.delete();
