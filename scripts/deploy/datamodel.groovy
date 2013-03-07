@@ -28,9 +28,13 @@ if (!checkDatamodel) {
 }
 
 def copyFromDeployedFolder = { server, environment, remoteFile ->
-	def copiedFile = "/tmp/portal-impl-$environment.jar"
+	def copiedFile = "/tmp/portal-impl-${environment}.jar"
 
-	"scp liferay@$server:$remoteFile $copiedFile"
+	def proc = "scp liferay@$server:$remoteFile $copiedFile".execute()
+
+	proc.waitFor()
+
+	println "Result $proc.text"
 
 	copiedFile
 }
@@ -66,6 +70,7 @@ def generateMD5 = { final inputStream ->
 
 
 def extractTextFromZipFile = { zipFilePath, pattern , conversion ->
+	println zipFilePath
 	def zipFile = new java.util.zip.ZipFile(zipFilePath)
 
 	def md5sum
@@ -84,7 +89,7 @@ def portalImplRelativePath="webapps/ROOT/WEB-INF/lib/portal-impl.jar"
 
 def portalImplStaged = "${stagingFolder}/${portalImplRelativePath}"
 
-def portalImplDeployed = new File( copyFromDeployedFolder(args[0], args[1], "/deploy/${arg[1]}/${portalImplRelativePath}") )
+def portalImplDeployed = new File( copyFromDeployedFolder(args[0], args[1], "/deploy/${args[1]}/${portalImplRelativePath}") )
 
 new File("attachments").eachFile() { file ->
 	file.delete();
@@ -96,7 +101,7 @@ def error = false
 
 [~/.*${currentVersion}\.sql/, ~/.*${currentVersion}\.class/].each { pattern ->
 
-	stagedMD5 = extractTextFromZipFile(portalImplStaging, pattern, generateMD5)	
+	stagedMD5 = extractTextFromZipFile(portalImplStaged, pattern, generateMD5)	
 
 	deployedMD5 = extractTextFromZipFile(portalImplDeployed, pattern, generateMD5)	
 

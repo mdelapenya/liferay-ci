@@ -1,0 +1,2 @@
+[SUCCESS]: No changes found in the files mathing the expression ".*6.2.0\.sql"!!
+[FAILURE]: Some of the files mathing the expression ".*6.2.0\.class" have changed. Review it  and apply the changes by hand in your database!!
