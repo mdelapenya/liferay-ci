@@ -68,11 +68,11 @@
 
               <j:set var="hadChanges" value="true" />
 
-              <j:set var="aUser" value="${cs.author.displayName}"/>
+              <j:set var="commiterUser" value="${cs.commiter.displayName}"/>
 
               <li>
                 <h3>
-                  ${spc}Revision <strong>${cs.commitId?:cs.revision?:cs.changeNumber}</strong> by <strong>${aUser!=null?aUser.displayName:cs.author.displayName}: </strong><strong>(${cs.msgAnnotated})</strong>
+                  <strong>${commiterUser!=null?commiterUser.displayName:cs.author.displayName}: </strong><strong>(${cs.msgAnnotated})</strong> (${spc}Revision <strong>${cs.commitId?:cs.revision?:cs.changeNumber}</strong>)
                 </h3>
 
                 <ul>
@@ -118,13 +118,17 @@
 
           <j:forEach var="junitResult" items="${it.JUnitTestResult}">
 
+            <j:set var="junitFailedTestList" value="${junitResult.getFailedTests()}" />
+
+            <h3>Total Errors : ${junitFailedTestList.size()}</h3>
+
             <j:forEach var="packageResult" items="${junitResult.getChildren()}">
 
               <j:set var="packageFailedTestList" value="${packageResult.getFailedTests()}" />
 
               <j:if test="${packageFailedTestList.isEmpty() != true}">
 
-                <h3>${packageResult.getName()}.${failed_test.getClassName().${failed_test.getName()}</h3>
+                <h4>${packageResult.getName()} : ${packageFailedTestList.size()}</h4>
 
                 <div style="${div_package}">
                   <table style="${table_errors}">
@@ -138,8 +142,8 @@
 
                         <tr>
                           <td style="${td_style}" title="${failed_test.getFullName()}">
-                            <a href="${rooturl}${build.url}/testReport/${failed_test.getPackageName()/${failed_test.getClassName()}/${failed_test.getName()/">
-                              ${failed_test.getPackageName()}.<strong>${failed_test.getName()}</strong>
+                            <a href="${rooturl}${build.url}testReport/junit/${failed_test.getPackageName()}/${failed_test.getClassName()}/${failed_test.getName()}/">
+                              ${failed_test.getClassName()}.<strong>${failed_test.getName()}</strong>
                             </a>
                           </td>
                           <td style="${td_style}">
