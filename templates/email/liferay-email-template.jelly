@@ -49,7 +49,7 @@
                   <table style="${table_errors}">
                     <thead>
                       <th style="text-align:left; width: 75%">Package.<strong>method</strong></th>
-                      <th style="width: 25%">Failing since</th>
+                      <th style="width: 25%">Failing since Build</th>
                     </thead>
                     <tbody>
 
@@ -61,7 +61,7 @@
                               ${failed_test.getClassName()}.<strong>${failed_test.getName()}</strong>
                             </a>
                           </td>
-                          <td style="${td_style}">
+                          <td style="${td_style}; text-align:center">
                             <a href="${rooturl}${failed_test.getFailedSinceRun().getUrl()}">${failed_test.getFailedSinceRun().getDisplayName()}</a>
                           </td>
                         </tr>
