@@ -4,7 +4,7 @@
 
     <j:set var="spc" value="&amp;nbsp;&amp;nbsp;" />
     <j:set var="table_errors" value="width:100%;"/>
-    <j:set var="td_style" value="background-color: #d4d4d4;color: #000000;padding: 2px;border: 0.1em solid black;"/>
+    <j:set var="td_style" value="background-color: transparent; padding: 2px;border: 0.1em solid black;"/>
     <j:set var="div_package" value="width: 100%; padding: 5px"/>
 
     <!-- JUnit TEMPLATE -->
