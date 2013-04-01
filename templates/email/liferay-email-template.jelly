@@ -132,7 +132,7 @@
 
                         <tr>
                           <td style="${td_style}" title="${failed_test.getFullName()}">
-                            <a href="${rooturl}${build.url}testReport/junit/${failed_test.getPackageName()}/${failed_test.getClassName()}/${failed_test.getName()}/">
+                            <a href="${rooturl}${build.url}testReport/junit/${failed_test.getPackageName()}/${failed_test.getSimpleName()}/${failed_test.getName()}/">
                               ${failed_test.getClassName()}.<strong>${failed_test.getName()}</strong>
                             </a>
                           </td>
