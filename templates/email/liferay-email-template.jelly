@@ -9,43 +9,33 @@
 
     <!-- GENERAL INFO -->
 
-    <table>
-      <tr>
-        <td style="text-align:right">
-
-          <j:choose>
+    <div style="display:table; ${table_errors}">
+      <div style="float: left; width: 50%">
+        <h3>BUILD ${build.result}</h3>
+        <j:choose>
 
             <j:when test="${build.result=='SUCCESS'}">
-              <IMG SRC="${rooturl}static/4860a290/images/32x32/blue.gif" />
+              <img src="${rooturl}plugin/emotional-jenkins-plugin/images/jenkins.png" title="${build.result}" />
             </j:when>
             <j:when test="${build.result=='FAILURE'}">
-              <IMG SRC="${rooturl}static/4860a290/images/32x32/red.gif" />
+              <img src="${rooturl}plugin/emotional-jenkins-plugin/images/sad-jenkins.png" title="${build.result}" />
             </j:when>
             <j:otherwise>
-              <IMG SRC="${rooturl}static/4860a290/images/32x32/yellow.gif" />
+              <img src="${rooturl}plugin/emotional-jenkins-plugin/images/angry-jenkins.png" title="${build.result}" />
             </j:otherwise>
 
           </j:choose>
+      </div>
+      <div style="float: rigth; width: 50%">
+        <ul>
+          <li>Build URL: <a href="${rooturl}${build.url}">${rooturl}${build.url}</a></li>
+          <li>Project: ${project.name}</li>
+          <li>Date of build: ${it.timestampString}</li>
+          <li>Build duration: ${build.durationString}</li>
+        </ul>
+      </div>
+    </div>
 
-        </td>
-        <td style="vertical-align:middle">
-          <strong style="font-size: 200%;">BUILD ${build.result}</strong>
-        </td>
-      </tr>
-      <tr>
-        <td>Build URL</td>
-        <td><A href="${rooturl}${build.url}">${rooturl}${build.url}</A></td>
-      </tr>
-      <tr>
-        <td>Project:</td><td>${project.name}</td>
-      </tr>
-      <tr>
-        <td>Date of build:</td><td>${it.timestampString}</td>
-      </tr>
-      <tr>
-        <td>Build duration:</td><td>${build.durationString}</td>
-      </tr>
-    </table>
     <br/>
 
     <!-- CHANGE SET -->
