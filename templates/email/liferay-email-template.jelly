@@ -5,6 +5,7 @@
     <j:set var="spc" value="&amp;nbsp;&amp;nbsp;" />
     <j:set var="table_errors" value="width:100%;"/>
     <j:set var="td_style" value="background-color: transparent; padding: 2px;border: 0.1em solid black;"/>
+    <j:set var="italic" value="font-style: italic;"/>
     <j:set var="div_package" value="width: 100%; padding: 5px"/>
     <j:set var="build_result" value="${rooturl}plugin/emotional-jenkins-plugin/images/jenkins.png"/>
 
@@ -107,7 +108,7 @@
 
               <li>
                 <h3>
-                  <strong>${commiterUser!=null?commiterUser.displayName:cs.author.displayName}: </strong><strong>(${cs.msgAnnotated})</strong> (${spc}Revision <strong>${cs.commitId?:cs.revision?:cs.changeNumber}</strong>)
+                  ${commiterUser!=null?commiterUser.displayName:cs.author.displayName}:</strong>&nbsp;<strong>(${cs.msgAnnotated})</strong>${spc}Revision <span style="${italic}">${cs.commitId?:cs.revision?:cs.changeNumber}</span>
                 </h3>
 
                 <ul>
