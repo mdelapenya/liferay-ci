@@ -7,34 +7,66 @@
     <j:set var="td_style" value="background-color: #d4d4d4;color: #000000;padding: 2px;border: 0.1em solid black;"/>
     <j:set var="div_package" value="width: 100%; padding: 5px"/>
 
-    <!-- GENERAL INFO -->
+    <!-- JUnit TEMPLATE -->
 
-    <div style="display:table; ${table_errors}">
-      <div style="float: left; width: 50%">
-        <h3>BUILD ${build.result}</h3>
-        <j:choose>
+    <j:set var="junitResultList" value="${it.JUnitTestResult}" />
 
-            <j:when test="${build.result=='SUCCESS'}">
-              <img src="${rooturl}plugin/emotional-jenkins-plugin/images/jenkins.png" title="${build.result}" />
-            </j:when>
-            <j:when test="${build.result=='FAILURE'}">
-              <img src="${rooturl}plugin/emotional-jenkins-plugin/images/sad-jenkins.png" title="${build.result}" />
-            </j:when>
-            <j:otherwise>
-              <img src="${rooturl}plugin/emotional-jenkins-plugin/images/angry-jenkins.png" title="${build.result}" />
-            </j:otherwise>
+    <j:if test="${junitResultList.isEmpty()!=true}">
 
-          </j:choose>
+      <h2>Failing Tests</h2>
+
+      <div id="junit-result-list">
+
+          <j:forEach var="junitResult" items="${it.JUnitTestResult}">
+
+            <j:set var="junitFailedTestList" value="${junitResult.getFailedTests()}" />
+
+            <h3>Total Errors : ${junitFailedTestList.size()}</h3>
+
+            <j:forEach var="packageResult" items="${junitResult.getChildren()}">
+
+              <j:set var="packageFailedTestList" value="${packageResult.getFailedTests()}" />
+
+              <j:if test="${packageFailedTestList.isEmpty() != true}">
+
+                <h4>${packageResult.getName()} : ${packageFailedTestList.size()}</h4>
+
+                <div style="${div_package}">
+                  <table style="${table_errors}">
+                    <thead>
+                      <th style="text-align:left; width: 75%">Package.<strong>method</strong></th>
+                      <th style="width: 25%">Failing since</th>
+                    </thead>
+                    <tbody>
+
+                      <j:forEach var="failed_test" items="${packageFailedTestList}">
+
+                        <tr>
+                          <td style="${td_style}" title="${failed_test.getFullName()}">
+                            <a href="${rooturl}${build.url}testReport/junit/${failed_test.getPackageName()}/${failed_test.getSimpleName()}/${failed_test.getName()}/">
+                              ${failed_test.getClassName()}.<strong>${failed_test.getName()}</strong>
+                            </a>
+                          </td>
+                          <td style="${td_style}">
+                            <a href="${rooturl}${failed_test.getFailedSinceRun().getUrl()}">${failed_test.getFailedSinceRun().getDisplayName()}</a>
+                          </td>
+                        </tr>
+
+                      </j:forEach>
+
+                    </tbody>
+                  </table>
+                </div>
+
+              </j:if>
+
+            </j:forEach>
+
+          </j:forEach>
+
       </div>
-      <div style="float: rigth; width: 50%">
-        <ul>
-          <li>Build URL: <a href="${rooturl}${build.url}">${rooturl}${build.url}</a></li>
-          <li>Project: ${project.name}</li>
-          <li>Date of build: ${it.timestampString}</li>
-          <li>Build duration: ${build.durationString}</li>
-        </ul>
-      </div>
-    </div>
+
+    </j:if>
 
     <br/>
 
@@ -86,7 +118,7 @@
 
         <j:if test="${!hadChanges}">
 
-           <p>
+          <p>
             No Changes
           </p>
 
@@ -96,66 +128,34 @@
 
     </j:if>
 
-    <!-- JUnit TEMPLATE -->
+    <!-- GENERAL INFO -->
 
-    <j:set var="junitResultList" value="${it.JUnitTestResult}" />
+    <div style="display:table; ${table_errors}">
+      <div style="float: left; width: 50%">
+        <h3>BUILD ${build.result}</h3>
+        <j:choose>
 
-    <j:if test="${junitResultList.isEmpty()!=true}">
+            <j:when test="${build.result=='SUCCESS'}">
+              <img src="${rooturl}plugin/emotional-jenkins-plugin/images/jenkins.png" title="${build.result}" />
+            </j:when>
+            <j:when test="${build.result=='FAILURE'}">
+              <img src="${rooturl}plugin/emotional-jenkins-plugin/images/sad-jenkins.png" title="${build.result}" />
+            </j:when>
+            <j:otherwise>
+              <img src="${rooturl}plugin/emotional-jenkins-plugin/images/angry-jenkins.png" title="${build.result}" />
+            </j:otherwise>
 
-      <h2>Failing Tests</h2>
-
-      <div id="junit-result-list">
-
-          <j:forEach var="junitResult" items="${it.JUnitTestResult}">
-
-            <j:set var="junitFailedTestList" value="${junitResult.getFailedTests()}" />
-
-            <h3>Total Errors : ${junitFailedTestList.size()}</h3>
-
-            <j:forEach var="packageResult" items="${junitResult.getChildren()}">
-
-              <j:set var="packageFailedTestList" value="${packageResult.getFailedTests()}" />
-
-              <j:if test="${packageFailedTestList.isEmpty() != true}">
-
-                <h4>${packageResult.getName()} : ${packageFailedTestList.size()}</h4>
-
-                <div style="${div_package}">
-                  <table style="${table_errors}">
-                    <thead>
-                      <th style="text-align:left; width: 75%">Package.<strong>method</strong></th>
-                      <th style="width: 25%">Failing since</th>
-                    </thead>
-                    <tbody>
-
-                      <j:forEach var="failed_test" items="${packageFailedTestList}">
-
-                        <tr>
-                          <td style="${td_style}" title="${failed_test.getFullName()}">
-                            <a href="${rooturl}${build.url}testReport/junit/${failed_test.getPackageName()}/${failed_test.getSimpleName()}/${failed_test.getName()}/">
-                              ${failed_test.getClassName()}.<strong>${failed_test.getName()}</strong>
-                            </a>
-                          </td>
-                          <td style="${td_style}">
-                            <a href="${rooturl}${failed_test.getFailedSinceRun().getUrl()}">${failed_test.getFailedSinceRun().getDisplayName()}</a>
-                          </td>
-                        </tr>
-
-                      </j:forEach>
-
-                    </tbody>                      
-                  </table>
-                </div>
-
-              </j:if>
-
-            </j:forEach>
-
-          </j:forEach>
-
+          </j:choose>
       </div>
-
-    </j:if>
+      <div style="float: rigth; width: 50%">
+        <ul>
+          <li>Build URL: <a href="${rooturl}${build.url}">${rooturl}${build.url}</a></li>
+          <li>Project: ${project.name}</li>
+          <li>Date of build: ${it.timestampString}</li>
+          <li>Build duration: ${build.durationString}</li>
+        </ul>
+      </div>
+    </div>
 
     <!-- CONSOLE OUTPUT -->
 
