@@ -6,6 +6,8 @@
     <j:set var="table_errors" value="width:100%;"/>
     <j:set var="td_style" value="background-color: transparent; padding: 2px;border: 0.1em solid #dcdcdc;"/>
     <j:set var="italic" value="font-style: italic;"/>
+    <j:set var="color_green" value="color: #10A100;"/>
+    <j:set var="color_red" value="color: #ff0000;"/>
     <j:set var="div_package" value="width: 100%; padding: 5px"/>
     <j:set var="build_result" value="${rooturl}plugin/emotional-jenkins-plugin/images/jenkins.png"/>
 
@@ -27,6 +29,8 @@
 
     <j:if test="${junitResultList.isEmpty()!=true}">
 
+      <j:set var="errorStyle" value="${color_green}" />
+
       <h2>Failing Tests</h2>
 
       <div id="junit-result-list" style="background: url(${build_result}) no-repeat top right">
@@ -35,7 +39,11 @@
 
             <j:set var="junitFailedTestList" value="${junitResult.getFailedTests()}" />
 
-            <h3>Total Errors : ${junitFailedTestList.size()}</h3>
+            <j:if test="${junitFailedTestList.isEmpty() != true}">
+              <j:set var="errorStyle" value="${color_red}" />
+            </j:if>
+
+            <h3>Total Errors : <span style="${errorStyle}">${junitFailedTestList.size()}</span></h3>
 
             <j:forEach var="packageResult" items="${junitResult.getChildren()}">
 
@@ -43,13 +51,13 @@
 
               <j:if test="${packageFailedTestList.isEmpty() != true}">
 
-                <h4>${packageResult.getName()} : ${packageFailedTestList.size()}</h4>
+                <h4><span style="${errorStyle}">${packageFailedTestList.size()}</span> errors in package ${packageResult.getName()}</h4>
 
                 <div style="${div_package}">
                   <table style="${table_errors}">
                     <thead>
-                      <th style="text-align:left; width: 75%">Package.<strong>method</strong></th>
-                      <th style="width: 25%">Failing since Build</th>
+                      <th style="text-align:left; width: 75%">Failing test method</th>
+                      <th style="width: 25%">Failing since build</th>
                     </thead>
                     <tbody>
 
@@ -108,7 +116,7 @@
 
               <li>
                 <h3>
-                  ${commiterUser!=null?commiterUser.displayName:cs.author.displayName}:</strong>&nbsp;<strong>(${cs.msgAnnotated})</strong>${spc}Revision <span style="${italic}">${cs.commitId?:cs.revision?:cs.changeNumber}</span>
+                  ${commiterUser!=null?commiterUser.displayName:cs.author.displayName}:&amp;nbsp;(${cs.msgAnnotated})${spc}Revision <span style="${italic}">${cs.commitId?:cs.revision?:cs.changeNumber}</span>
                 </h3>
 
                 <ul>
