@@ -4,7 +4,7 @@
 
     <j:set var="spc" value="&amp;nbsp;&amp;nbsp;" />
     <j:set var="table_errors" value="width:100%;"/>
-    <j:set var="td_style" value="background-color: transparent; padding: 2px;border: 0.1em solid black;"/>
+    <j:set var="td_style" value="background-color: transparent; padding: 2px;border: 0.1em solid #dcdcdc;"/>
     <j:set var="italic" value="font-style: italic;"/>
     <j:set var="div_package" value="width: 100%; padding: 5px"/>
     <j:set var="build_result" value="${rooturl}plugin/emotional-jenkins-plugin/images/jenkins.png"/>
