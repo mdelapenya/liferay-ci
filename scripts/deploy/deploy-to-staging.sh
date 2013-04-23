@@ -1,4 +1,4 @@
-#!/bin/bash
+#/bin/bash
 
 export PATH=${PATH}:/opt/ant/apache-ant-1.8.3/bin
 
@@ -22,9 +22,11 @@ FILE=$(find ${stagedFolder} -name bottom-ext.jsp)
 
 CURRENT_HEAD=$(git rev-parse HEAD)
 
+CURRENT_DATE=$(git log -1 --pretty=format:%cd HEAD)
+
 URL_CURRENT_HEAD=${LIFERAY_GITHUB_REPO}/${CURRENT_HEAD}
 
-LAST_COMMIT="<div class='portlet-msg-info' style='margin: 2em'>Commit <a href='${URL_CURRENT_HEAD}'>${CURRENT_HEAD}</a></div>"
+LAST_COMMIT="<div class='portlet-msg-info' style='margin: 2em'>Commit <a href='${URL_CURRENT_HEAD}'>${CURRENT_HEAD} - ${CURRENT_DATE}</a></div>"
 
 echo '<%@ page import="com.liferay.portal.kernel.util.ParamUtil" %>' > $FILE
 echo '<% String ppstate = ParamUtil.getString(request, "p_p_state", "normal");%>' >> $FILE
