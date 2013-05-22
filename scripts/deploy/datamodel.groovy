@@ -99,7 +99,7 @@ def output = new File("attachments", "datamodel.status")
 
 def error = false
 
-[~/.*${currentVersion}\.sql/, ~/.*${currentVersion}\.class/].each { pattern ->
+[~/.*${currentVersion}\.sql/, ~/.*${currentVersion}\.class/, ~/.*\/${currentVersion}.*.class/].each { pattern ->
 
 	stagedMD5 = extractTextFromZipFile(portalImplStaged, pattern, generateMD5)	
 
