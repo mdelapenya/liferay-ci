@@ -6,10 +6,12 @@ echo "Deploying the succesful build to the staging environment"
 
 #  Copy all the relevant files to the staged folder
 
-rm -fr ${stagedFolder}/webapps/ROOT
-cp -R ${WORKSPACE}/../bundles/tomcat-7.0.40/webapps/ROOT ${stagedFolder}/webapps
+FULL_PATH_STAGED_FOLDER=${stagedPath}/${stagedFolder}
 
-cp ${WORKSPACE}/../bundles/tomcat-7.0.40/lib/ext/{support-tomcat,portal-service}.jar ${stagedFolder}/lib/ext
+rm -fr ${stagedFolder}/webapps/ROOT
+cp -R ${WORKSPACE}/../bundles/tomcat-7.0.40/webapps/ROOT ${FULL_PATH_STAGED_FOLDER}/webapps
+
+cp ${WORKSPACE}/../bundles/tomcat-7.0.40/lib/ext/{support-tomcat,portal-service}.jar ${FULL_PATH_STAGED_FOLDER}/lib/ext
 
 
 # Include the current revision in the theme
@@ -18,7 +20,7 @@ echo "Generating current revision in the default theme . . ."
 
 LIFERAY_GITHUB_REPO=https://github.com/liferay/liferay-portal/commit
 
-FILE=$(find ${stagedFolder} -name bottom-ext.jsp)
+FILE=$(find ${FULL_PATH_STAGED_FOLDER} -name bottom-ext.jsp)
 
 CURRENT_HEAD=$(git rev-parse HEAD)
 
