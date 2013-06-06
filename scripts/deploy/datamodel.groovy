@@ -101,7 +101,9 @@ def error = false
 
 def packageVersion = "v" + currentVersion.replace(".", "_")
 
-[~/.*${currentVersion}\.sql/, ~/.*${currentVersion}\.class/, ~/.*\/${packageVersion}.*.class/].each { pattern ->
+def indexesFileName = "indexes"
+
+[~/.*${indexesFileName}\.sql/, ~/.*${currentVersion}\.sql/, ~/.*${currentVersion}\.class/, ~/.*\/${packageVersion}.*.class/].each { pattern ->
 
 	stagedMD5 = extractTextFromZipFile(portalImplStaged, pattern, generateMD5)	
 
