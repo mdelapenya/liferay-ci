@@ -16,6 +16,9 @@ export STAGED_FOLDER="/opt/tomcat/liferay-master-staging"
 # Stop the running server
 ssh  ${server} "shutdown-server.sh ${environment}"
 
+# remove osgi state
+ssh ${server} "rm -fr /home/liferay/${environment}/data/osgi/state"
+
 # Move the source code (staging) to the live server 
 
 ssh ${server} "rm -fr ${SERVER_ROOT}/webapps/ROOT ${SERVER_ROOT}/lib/ext/{support-tomcat,portal-service}.jar ${SERVER_ROOT}/{work,temp,logs}/*"
