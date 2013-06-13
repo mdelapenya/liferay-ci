@@ -11,15 +11,15 @@
 PARAMS_COUNT=${#}
 
 function copy() {
-	echo "rsync -av --delete ${1} ${2}"
+	rsync -av --delete ${1} ${2}
 }
 
 function backupDatabase() {
-	echo "mysqldump -u${2} -p${3} -h${1} liferay_${4} > ${5}"
+	mysqldump -u${2} -p${3} -h${1} liferay_${4} > ${5}
 }
 
 function restoreDatabase() {
-	echo "mysql -u${2} -p${3} -h${1} liferay_${4} < ${5}"
+	mysql -u${2} -p${3} -h${1} liferay_${4} < ${5}
 }
 
 function usage() {
