@@ -12,7 +12,10 @@ LIFERAY_PLUGINS_REPOSITORY=/opt/tomcat/liferay-plugins-staging/
 
 for plugin in $plugins
 do 
-  echo Deploying the $plugin plugin
+	echo Removing deployed plugin
+	ssh liferay@${server} find /deploy/${environment}/webapps -type d -name *${plugin}* -maxdepth 1 -exec rm -fr {} \;
+
+  echo Deploying the $plugin plugins
   find ${LIFERAY_PLUGINS_REPOSITORY} -name $plugin*.war -exec scp {} ${server}:/home/liferay/${environment}/deploy \;
 done
 
