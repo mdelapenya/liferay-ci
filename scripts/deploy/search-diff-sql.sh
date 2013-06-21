@@ -1,8 +1,8 @@
 #!/bin/sh
 
-if [ $# != 3 ]
+if [ $# != 4 ]
 then
-        echo "<Usage> $0 <staged folder><deployment environment><liferay.version>"
+        echo "<Usage> $0 <staged folder><deployment environment><liferay.version><server>"
         exit
 fi
 
@@ -10,7 +10,7 @@ fi
 DEPLOYED_PORTAL_IMPL_JAR=/tmp/portal-impl.jar
 STAGED_PORTAL_IMPL_JAR=$1/webapps/ROOT/WEB-INF/lib/portal-impl.jar
 
-scp james:/deploy/$2/webapps/ROOT/WEB-INF/lib/portal-impl.jar ${DEPLOYED_PORTAL_IMPL_JAR}
+scp $4:/deploy/$2/webapps/ROOT/WEB-INF/lib/portal-impl.jar ${DEPLOYED_PORTAL_IMPL_JAR}
 
 
 TEMP_FOLDER_DEPLOYED=/tmp/deployed/
