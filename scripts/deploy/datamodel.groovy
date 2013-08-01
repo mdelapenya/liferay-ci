@@ -107,7 +107,8 @@ def patternList = [
 	~/.*${indexesFileName}\.sql/,
 	~/.*${currentVersion}\.sql/,
 	~/.*${currentVersion}\.class/,
-	~/.*\/${packageVersion}.*.class/
+	~/.*\/${packageVersion}.*.class/,
+	~/.*service\.xml/
 ]
 
 patternList.each { pattern ->
