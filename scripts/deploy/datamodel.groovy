@@ -75,7 +75,7 @@ def extractTextFromZipFile = { zipFilePath, pattern , conversion ->
 
 	def md5sum
 
-	zipFile.entries().find { pattern.matcher(it.name).matches() }.each {
+	zipFile.entries().findAll { pattern.matcher(it.name).matches() }.each {
 		md5sum = conversion(zipFile.getInputStream(it))
 	}
 
