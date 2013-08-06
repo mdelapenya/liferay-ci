@@ -30,6 +30,7 @@ URL_CURRENT_HEAD=${LIFERAY_GITHUB_REPO}/${CURRENT_HEAD}
 
 LAST_COMMIT="<div class='alert alert-info' style='margin: 2em'>Commit <a href='${URL_CURRENT_HEAD}'>${CURRENT_HEAD} - ${CURRENT_DATE}</a></div>"
 
+echo '<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>'
 echo '<%@ page import="com.liferay.portal.kernel.util.ParamUtil" %>' > $FILE
 echo '<% String ppstate = ParamUtil.getString(request, "p_p_state", "normal");%>' >> $FILE
 echo '<c:if test="<%= ppstate.equals("normal") %>">' >> $FILE
