@@ -28,7 +28,7 @@ CURRENT_DATE=$(git log -1 --pretty=format:%cd HEAD)
 
 URL_CURRENT_HEAD=${LIFERAY_GITHUB_REPO}/${CURRENT_HEAD}
 
-LAST_COMMIT="<div class='alert alert-info' style='margin: 2em'>Commit <a href='${URL_CURRENT_HEAD}'>${CURRENT_HEAD} - ${CURRENT_DATE}</a></div>"
+LAST_COMMIT="<div id='currentHead' class='alert alert-info' style='margin: 2em'>Commit <a href='${URL_CURRENT_HEAD}'>${CURRENT_HEAD} - ${CURRENT_DATE}</a></div>"
 
 echo '<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>'
 echo '<%@ page import="com.liferay.portal.kernel.util.ParamUtil" %>' > $FILE
