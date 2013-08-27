@@ -16,6 +16,12 @@ export STAGED_FOLDER="/opt/tomcat/liferay-master-staging"
 # Stop the running server
 ssh  ${server} "shutdown-server.sh ${environment}"
 
+# sleeping waiting for remote command
+sleep 15
+
+# backup environment
+ssh ${server} "/home/liferay/liferay-ci/scripts/deploy/backup-environment.sh harry ${environment} backup liferay liferay"
+
 # remove osgi state
 ssh ${server} "rm -fr /home/liferay/${environment}/data/osgi/state"
 
