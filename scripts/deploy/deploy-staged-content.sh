@@ -20,7 +20,7 @@ ssh  ${server} "shutdown-server.sh ${environment}"
 sleep 15
 
 # backup environment
-ssh ${server} "/home/liferay/liferay-ci/scripts/deploy/backup-environment.sh harry ${environment} backup liferay liferay"
+ssh ${server} "/home/liferay/liferay-ci/scripts/deploy/backup-environment.sh harry ${environment} backup liferay liferay ${doFileSystemBackup}"
 
 # remove osgi state
 ssh ${server} "rm -fr /home/liferay/${environment}/data/osgi/state"
