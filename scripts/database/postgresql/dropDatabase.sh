@@ -1,20 +1,21 @@
 #!/bin/bash
-MUSER="$1"
-MPASS="$2"
-MDB="$3"
+MHOST="$1"
+MUSER="$2"
+MPASS="$3"
+MDB="$4"
  
 # Detect the paths for the PostgreSQL command
 POSTGRESQL=$(which psql)
  
-if [ $# -ne 3 ]
+if [ $# -ne 4 ]
 then
-	echo "Usage: $0 {PostgreSQL-User-Name}{PostgreSQL-Password}{PostgreSQL-Database-Name}"
+	echo "Usage: $0 {Hostname}{PostgreSQL-User-Name}{PostgreSQL-Password}{PostgreSQL-Database-Name}"
 	echo "Deletes and (re) create the indicated database"
 	exit 1
 fi
 
 echo "Deleting database $MDB ..."
-$POSTGRESQL -U $MUSER -c "DROP DATABASE $MDB"
+$POSTGRESQL -h ${MHOST} -U $MUSER -c "DROP DATABASE $MDB"
 echo "Creating the database $MDB . . ."
-$POSTGRESQL -U $MUSER -c "CREATE DATABASE ${MDB} ENCODING = 'UTF8'"
-echo "Database $MDB has been created" 
+$POSTGRESQL -h ${MHOST} -U $MUSER -c "CREATE DATABASE ${MDB} ENCODING = 'UTF8'"
+echo "Database $MDB has been created"
