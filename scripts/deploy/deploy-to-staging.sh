@@ -9,9 +9,9 @@ echo "Deploying the succesful build to the staging environment"
 FULL_PATH_STAGED_FOLDER=${stagedPath}/${stagedFolder}
 
 rm -fr ${stagedFolder}/webapps/ROOT
-cp -R ${WORKSPACE}/../bundles/tomcat-7.0.40/webapps/ROOT ${FULL_PATH_STAGED_FOLDER}/webapps
+cp -R ${WORKSPACE}/../bundles/tomcat-${serverVersion}/webapps/ROOT ${FULL_PATH_STAGED_FOLDER}/webapps
 
-cp ${WORKSPACE}/../bundles/tomcat-7.0.40/lib/ext/{support-tomcat,portal-service}.jar ${FULL_PATH_STAGED_FOLDER}/lib/ext
+cp ${WORKSPACE}/../bundles/tomcat-${serverVersion}/lib/ext/{support-tomcat,portal-service}.jar ${FULL_PATH_STAGED_FOLDER}/lib/ext
 
 
 # Include the current revision in the theme
