@@ -60,6 +60,9 @@ done
 #Copy to the specific Deployment Server
 scp ${LOCAL_PORTAL_EXT_PROPERTIES_FILE} ${server}:${PORTAL_EXT_PROPERTIES_FILE}
 
+#Remove system-ext.properties
+ssh ${server} "rm ${SERVER_ROOT}/webapps/ROOT/WEB-INF/classes/system-ext.properties"
+
 ###
 # Restart the application server
 ### 
