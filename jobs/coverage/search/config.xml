@@ -22,7 +22,7 @@
           <defaultValue>#jsp.precompile=on
 source.formatter.excludes=**/portal-ext.properties
 
-junit.cobertura.includes=com/liferay/.*/search/.*
+junit.cobertura.includes=com/liferay/.*/.*[s|S]earch.*,com/liferay/.*/.*[l|L]ucene.*
 junit.cobertura.excludes=com/liferay/.*/search/service/.*,com/liferay/.*/search/service/base/.*,com/liferay/.*/search/service/impl/.*,com/liferay/.*/search/service/persistence/.*,com/liferay/.*/search/model/.*,com/liferay/.*/search/model/impl/.*BaseImpl.class,com/liferay/.*/search/model/impl/.*Model.class,com/liferay/.*/search/model/impl/.*ModelImpl.class
 
 junit.code.coverage=true

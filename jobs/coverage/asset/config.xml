@@ -22,7 +22,7 @@
           <defaultValue>#jsp.precompile=on
 source.formatter.excludes=**/portal-ext.properties
 
-junit.cobertura.includes=com/liferay/.*/asset/.*
+junit.cobertura.includes=com/liferay/.*/.*[a|A]sset.*,com/liferay/.*/.*[j|J]ournal.*,com/liferay/.*/.*[s|S]ites.*,com/liferay/.*/.*[s|S]taging.*,com/liferay/.*/.*LayoutTemplate.*,com/liferay/.*/.*SiteTemplate.*,com/liferay/.*/.*ApplicationDisplayTemplate.*,com/liferay/.*/.*dynamicdatalist.*,com/liferay/.*/.*DDL.*,com/liferay/.*/.*dynamicdatamapping.*,com/liferay/.*/.*DDM.*,com/liferay/.*/.*[b|B]ookmarks.*,com/liferay/.*/.*[b|B]readcum.*,com/liferay/.*/.*[b|B]readcum.*,com/liferay/.*/.*[n|N]avigation.*,com/liferay/.*/.*.[l|L]anguage.*,com/liferay/.*/.*.[r|R]ss.*,com/liferay/.*/.*.[g|G]oogle.*
 junit.cobertura.excludes=com/liferay/.*/asset/service/.*,com/liferay/.*/asset/service/base/.*,com/liferay/.*/asset/service/impl/.*,com/liferay/.*/asset/service/persistence/.*,com/liferay/.*/asset/model/.*,com/liferay/.*/asset/model/impl/.*BaseImpl.class,com/liferay/.*/asset/model/impl/.*Model.class,com/liferay/.*/asset/model/impl/.*ModelImpl.class
 
 junit.code.coverage=true
