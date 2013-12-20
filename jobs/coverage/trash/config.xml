@@ -52,7 +52,7 @@ lucene.store.type=ram
 lucene.merge.policy=org.apache.lucene.index.NoMergePolicy
 lucene.merge.scheduler=org.apache.lucene.index.NoMergeScheduler
 
-cluster.link.autodetect.address=192.168.11.6:80</defaultValue>
+cluster.link.autodetect.address=192.168.11.7:80</defaultValue>
         </hudson.model.TextParameterDefinition>
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>

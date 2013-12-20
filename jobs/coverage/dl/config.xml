@@ -22,8 +22,8 @@
           <defaultValue>#jsp.precompile=on
 source.formatter.excludes=**/portal-ext.properties
 
-junit.cobertura.includes=com/liferay/.*/lar/.*
-junit.cobertura.excludes=com/liferay/.*/lar/service/.*,com/liferay/.*/lar/service/base/.*,com/liferay/.*/lar/service/impl/.*,com/liferay/.*/lar/service/persistence/.*,com/liferay/.*/lar/model/.*,com/liferay/.*/lar/model/impl/.*BaseImpl.class,com/liferay/.*/lar/model/impl/.*Model.class,com/liferay/.*/lar/model/impl/.*ModelImpl.class
+junit.cobertura.includes=com/liferay/.*/DL.*,com/liferay/.*/.*[d|D]ocumentlibrary.*,com/liferay/.*/.*[w|W]eb[dav|DAV].*
+junit.cobertura.excludes=
 
 junit.code.coverage=true
 junit.cobertura.report.format=xml
@@ -34,11 +34,11 @@ junit.java.maxpermsize=512m</defaultValue>
           <name>portalProperties</name>
           <description></description>
           <defaultValue>jdbc.default.driverClassName=com.mysql.jdbc.Driver
-jdbc.default.url=jdbc:mysql://localhost/lportal_lar_with_cobertura?useUnicode=true&amp;characterEncoding=UTF-8&amp;useFastDateParsing=false
+jdbc.default.url=jdbc:mysql://localhost/lportal_dl_with_cobertura?useUnicode=true&amp;characterEncoding=UTF-8&amp;useFastDateParsing=false
 jdbc.default.username=liferay
 jdbc.default.password=liferay
 
-liferay.home=/jenkins-data/jobs/liferay-portal-lar-test-and-cobertura-mysql-jdk6/bundles/
+liferay.home=/jenkins-data/jobs/liferay-portal-dl-test-and-cobertura-mysql-jdk6/bundles/
 
 ehcache.portal.cache.manager.jmx.enabled=false
 #index.with.thread=false
@@ -52,7 +52,7 @@ lucene.store.type=ram
 lucene.merge.policy=org.apache.lucene.index.NoMergePolicy
 lucene.merge.scheduler=org.apache.lucene.index.NoMergeScheduler
 
-cluster.link.autodetect.address=192.168.11.4:80</defaultValue>
+cluster.link.autodetect.address=192.168.11.3:80</defaultValue>
         </hudson.model.TextParameterDefinition>
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>
@@ -113,7 +113,7 @@ cluster.link.autodetect.address=192.168.11.4:80</defaultValue>
 
 git clean -f -d
 
-/home/liferay/liferay-ci/scripts/database/mysql/dropDatabase.sh localhost liferay liferay lportal_lar_with_cobertura</command>
+/home/liferay/liferay-ci/scripts/database/mysql/dropDatabase.sh localhost liferay liferay lportal_dl_with_cobertura</command>
     </hudson.tasks.Shell>
     <hudson.tasks.Shell>
       <command>#!/bin/bash
