@@ -7,7 +7,7 @@
 # ${pluginProperties}: properties to customize the plugin 
 #
 
-LIFERAY_PLUGINS_REPOSITORY=/opt/tomcat/liferay-plugins-staging/
+LIFERAY_PLUGINS_REPOSITORY=${pluginsStagingPath}
 
 TMP_DIRECTORY=/tmp/{environment}-${plugin}
 

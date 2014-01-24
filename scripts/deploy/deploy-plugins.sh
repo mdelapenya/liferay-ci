@@ -8,7 +8,7 @@ OLD_IFS=${IFS}
 
 IFS=','
 
-LIFERAY_PLUGINS_REPOSITORY=/opt/tomcat/liferay-plugins-staging/
+LIFERAY_PLUGINS_REPOSITORY=${pluginsStagingPath}
 
 for plugin in $plugins
 do 
